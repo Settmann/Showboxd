@@ -1,21 +1,3 @@
-{
-  "name": "showboxd",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd ./server && node bin/www"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Settmann/Showboxd.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Settmann/Showboxd/issues"
-  },
-  "homepage": "https://github.com/Settmann/Showboxd#readme"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5e5d666e6c5de5ee1177f3a4f889664c78d69dfcaf1bf36237847901e8404846
+size 501
