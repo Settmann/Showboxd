@@ -1,15 +1,17 @@
-const apikey = { apikey: "46194291-7a88-4a88-9d81-9cf6a13a4f41" };
+const apikey = { "apikey": "46194291-7a88-4a88-9d81-9cf6a13a4f41" };
 
 async function fetchData() {
   const tvShows = [];
   const token = await login();
-  
+  const seriers =  await fetchShow(token);
+  return seriers;
 }
 
 async function login(){
   try {
     const response = await fetch('https://api4.thetvdb.com/v4/login', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(apikey)
     });
 
@@ -18,8 +20,8 @@ async function login(){
       throw new Error(`Error ${response.status}: ${errorData.message}`)
     }
 
-    const token = await response.json();
-    return token;
+    const json = await response.json();
+    return json.data.token;
   } catch (error){
     console.error('POST error:', error.message);
   }
@@ -39,10 +41,13 @@ async function fetchShow(token){
 
     const series = await response.json();
     //for every obj in series.data we need to fetch the episode lists
-    series.data.forEach(async (show) => {
-      const episodes = await fetchEpisodes(token, show.id);
-      show.episodes =  episodes;
-    })
+    await Promise.all(
+      series.data.map(async (show) => {
+        const episodes = await fetchEpisodes(token, show.id);
+        show.episodes = episodes;
+      })
+    );
+    return series.data;
   } catch (error){
     console.error('POST error:', error.message);
   }
@@ -52,7 +57,9 @@ async function fetchEpisodes(token, id){
   try {
     const response =  await fetch(`https://api4.thetvdb.com/v4/series/${id}/episodes/default`, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { 'Authorization': `Bearer ${token}`,
+                 'Content-Type': 'application/json' 
+      }
     });
 
     if (!response.ok) {
@@ -67,3 +74,5 @@ async function fetchEpisodes(token, id){
     console.error('POST error:', error.message);
   }
 }
+
+module.exports = { fetchData }
