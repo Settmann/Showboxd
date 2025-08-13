@@ -1,7 +1,7 @@
-const dotenv = require('dotenv');
-const { MongoClient } = require('mongodb');
-dotenv.config();
-const dbUrl = "mongodb+srv://smannarino137:Settimio123@cluster0.sgon1.mongodb.net/"// use this with .env file process.env.MONGODB_URI;
+// const dotenv = require('dotenv');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+// dotenv.config();
+const dbUrl = "mongodb+srv://smannarino137:Spiderman123@cluster0.sgon1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"// use this with .env file process.env.MONGODB_URI;
 
 
 let instance;
@@ -11,7 +11,13 @@ class DB {
     //instance is the singleton, defined in outer scope
     if (!instance){
       instance = this;
-      this.client = new MongoClient(dbUrl);
+      this.client = new MongoClient(dbUrl, {
+        serverApi: {
+          version: ServerApiVersion.v1,
+          strict: true,
+          deprecationErrors: true,
+        }
+});
       this.db = null;
       this.collection = null;
     }
@@ -82,7 +88,10 @@ class DB {
 
   async createMany(array) {
     const result = await instance.collection.insertMany(array);
-    return result.insertedCount;
+  }
+
+  async deleteMany(filter) {
+    const result = await instance.collection.deleteMany(filter);
   }
 
   async findMovieById(movieId) {
