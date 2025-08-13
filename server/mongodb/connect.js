@@ -1,6 +1,6 @@
-// const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-// dotenv.config();
+dotenv.config();
 const dbUrl = "mongodb+srv://smannarino137:Spiderman123@cluster0.sgon1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"// use this with .env file process.env.MONGODB_URI;
 
 
@@ -63,27 +63,12 @@ class DB {
     }
   }
 
-  async readAllStatistic() {
-    return await instance.collection.find({
-      $and: [
-        { budget: { $ne: 0 } },
-        { revenue: { $ne: 0 } }
-      ]
-    }).project({ 
-      profit: 1, 
-      runtime: 1, 
-      budget: 1, 
-      revenue: 1,
-      releaseYear: 1
-    }).toArray();
-  }
-
   async readAll() {
     return await instance.collection.find({}).toArray();
   }
 
-  async create(quote) {
-    return await instance.collection.insertOne(quote);
+  async create(show) {
+    return await instance.collection.insertOne(show);
   } 
 
   async createMany(array) {
@@ -94,25 +79,8 @@ class DB {
     const result = await instance.collection.deleteMany(filter);
   }
 
-  async findMovieById(movieId) {
-    return await instance.collection.findOne({ movieID: movieId });
-  }
-
-  async findMoviesByYear(year) {
-    return await instance.collection.
-      find({
-        releaseYear: Number(year),
-        budget: { $ne: 0 },
-        revenue: { $ne: 0 }
-      }).project({ 
-        movieID: 1,
-        imbdID: 1,
-        title: 1,
-        cast: 1,
-        genres: 1,
-        director: 1
-      }).
-      toArray();
+  async findShowById(id) {
+    return await instance.collection.findOne({ id: id });
   }
 }
 
