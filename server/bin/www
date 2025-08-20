@@ -1,10 +1,20 @@
 #!/usr/bin/env node
 const app = require('../app');
-const PORT = process.env.PORT || 3000;
+const DB = require('../mongodb/connect.js');
+const port = process.env.PORT || 3000;
 
 (async () => {
-  app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}! http://localhost:${PORT}`);
+  try {
+    const db = new DB();
+    await db.connect('showboxd', 'tvshows');
+  } catch (e) {
+    console.error('could not connect');
+    process.exit();
+  }
+  app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`Server listening on port ${port}!`);
   });
 })();
+
 
