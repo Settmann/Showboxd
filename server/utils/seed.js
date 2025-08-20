@@ -1,8 +1,6 @@
 const DB = require('../mongodb/connect');
 const { fetchData } = require('./fetchdata');
 const path = require('path');
-//dont need this
-//const filePath = path.join(__dirname, 'movieDataset.csv');
 const db = new DB();
 
 const occupyDB = async () => {
