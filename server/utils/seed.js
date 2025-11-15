@@ -8,6 +8,8 @@ const occupyDB = async () => {
   try {
     const db = new DB();
     await db.connect('showboxd', 'tvshows');
+    //need to add a function that will only add new movies from the api. not erase everything and then call them all back
+    //this would make it so that movies added but clients dont vannish
     await db.deleteMany({});
     await db.createMany(shows);
     await db.createIndex('tvshows', { 

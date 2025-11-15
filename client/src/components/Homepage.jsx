@@ -1,4 +1,3 @@
-import "./Homepage.css";
 import React, { useEffect, useState } from 'react';
 import ShowCard from './ShowCard.jsx';
 
@@ -7,22 +6,30 @@ export default function Homepage(props) {
   const [shows, setShows] = useState([]);
 
   useEffect(() => {
-    fetch('/api/v1/shows/')
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchShows = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/v1/shows/");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data);          // debug log
         setShows(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching shows:', error);
-      });
-  }, []); 
+      } catch (err) {
+        console.error("Error fetching shows:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchShows();
+  }, []);
   
   return (
-    <div class="nav flex-center space-between">
+    <div className="nav flex-center space-between">
       <div>
-        <h1>Watch Shows</h1>
-        <h1>Write Reviews</h1>
-        <h1>Create Lists</h1>
+        <h1 className='w-screen text-center pt-30'>Watch Shows. Write Reviews. Create Lists. Repeat</h1>
       </div>
       <div>
         <ShowCard></ShowCard>

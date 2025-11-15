@@ -1,0 +1,10 @@
+.App {
+  background-color: #282c34;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+}
+
+.App *{
+  color: white;
+}

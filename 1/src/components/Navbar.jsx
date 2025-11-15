@@ -4,12 +4,12 @@ import logo from "../assets/showboxd_logo.png";
 export default function Navbar(props) {
   
   return (
-    <div className="w-screen flex items-center justify-between ">
-      <div className="w-full flex items-center">
-        <img src={logo} alt="showboxd logo" className="h-10 w-auto"/>
-        <h1>Showboxd</h1>
+    <div class="nav flex-center space-between ">
+      <div class="flex-center">
+        <img src={logo} alt="showboxd logo" class="logo"/>
+        <h2>Showboxd</h2>
       </div>
-      <ul className="w-full flex flex-row justify-evenly items-center">
+      <ul class="flex flex-row items-center">
         <li><p>SIGN IN</p></li>
         <li><p>CREATE ACCOUNT</p></li>
         <li><p>SHOWS</p></li>
