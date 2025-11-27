@@ -82,6 +82,11 @@ class DB {
   async findShowById(id) {
     return await instance.collection.findOne({ id: id });
   }
+
+  async findRandomFourShows() {
+    const result = await instance.collection.aggregate([{ $sample: { size: 4 } }]).toArray();
+    return result;
+  }
 }
 
 module.exports = DB;

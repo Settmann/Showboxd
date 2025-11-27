@@ -12,6 +12,16 @@ const getAllShows = async (req,res) => {
   }
 };
 
+const getFourRandomShows = async (req,res) => {
+  try {
+    await db.connect('showboxd', 'tvshows');
+    const shows = await db.findRandomFourShows();
+    res.status(200).json(shows);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 const getMovieById = async (req, res) => {
   try{
     const { id } = req.params;
@@ -30,6 +40,7 @@ const getMovieById = async (req, res) => {
 
 
 module.exports = {
-  getAllShows
+  getAllShows,
+  getFourRandomShows
 };
 
