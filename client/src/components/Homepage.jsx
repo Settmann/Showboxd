@@ -3,18 +3,17 @@ import ShowCard from './ShowCard.jsx';
 
 export default function Homepage(props) {
 
-  const [shows, setShows] = useState([]);
+  const [previewFour, setPreviewFour] = useState([]);
 
   useEffect(() => {
     const fetchShows = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/shows/");
+        const response = await fetch("http://localhost:3000/api/v1/shows/rand");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data);          // debug log
-        setShows(data);
+        setPreviewFour(data);
       } catch (err) {
         console.error("Error fetching shows:", err);
         setError(err.message);
