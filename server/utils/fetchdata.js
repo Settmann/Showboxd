@@ -47,7 +47,9 @@ async function fetchShow(token){
         show.episodes = episodes;
       })
     );
-    return series.data;
+    //clean shows
+    const cleanedSeries = cleanUpShows(series.data);
+    return cleanedSeries;
   } catch (error){
     console.error('POST error:', error.message);
   }
@@ -68,11 +70,23 @@ async function fetchEpisodes(token, id){
     }
 
     const episodes = await response.json();
-    return episodes.data.episodes;
+    //clean episodes
+    const cleanedEpisode = cleanUpEpidoes(episodes.data.episodes);
+    return cleanedEpisode;
 
   } catch (error){
     console.error('POST error:', error.message);
   }
+}
+
+function cleanUpShows(shows){
+  shows = shows.map(({ id, name, image, firstAired, episodes, overview }) => ({ id, name, image, firstAired, episodes, overview }));
+  return shows;
+}
+
+function cleanUpEpidoes(episodes){
+  episodes = episodes.map(({ id, name, aired, runtime, overview, image, number, seasonNumber }) => ({ id, name, aired, runtime, overview, image, number, seasonNumber }));
+  return episodes;
 }
 
 module.exports = { fetchData }
