@@ -30,11 +30,11 @@ export default function Homepage(props) {
       <div>
         <h1 className='w-screen text-center pt-30'>Watch Shows. Write Reviews. Create Lists. Repeat</h1>
       </div>
-      <div>
-        <ShowCard></ShowCard>
-        <ShowCard></ShowCard>
-        <ShowCard></ShowCard>
-        <ShowCard></ShowCard>
+      <div class="flex">
+        <ShowCard show={previewFour[0]}></ShowCard>
+        <ShowCard show={previewFour[1]}></ShowCard>
+        <ShowCard show={previewFour[2]}></ShowCard>
+        <ShowCard show={previewFour[3]}></ShowCard>
       </div>
     </div>
   );
